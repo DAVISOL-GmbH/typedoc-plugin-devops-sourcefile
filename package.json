@@ -1,7 +1,7 @@
 {
   "author": "Sebastian Hübner",
   "name": "typedoc-plugin-devops-sourcefile",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "description": "typedoc plugin to set source file URL links to a Git repository hosted in Azure DevOps",
   "homepage": "https://github.com/shuebner20/typedoc-plugin-devops-sourcefile",
   "bugs": "https://github.com/shuebner20/typedoc-plugin-devops-sourcefile/issues",
@@ -16,14 +16,12 @@
     "devops"
   ],
   "peerDependencies": {
-    "typedoc": ">=0.15.0"
+    "typedoc": ">=0.16.0"
   },
   "devDependencies": {
-    "@types/fs-extra": "^8.0.0",
-    "fs-extra": "^8.1.0",
-    "path": "^0.12.7",
-    "typedoc": "^0.15.0",
-    "typescript": "^3.5.3"
+    "@types/node": "^13.9.0",
+    "typedoc": "^0.16.11",
+    "typescript": "^3.7.5"
   },
   "main": "dist/main.js",
   "scripts": {

@@ -1,11 +1,11 @@
-import * as FS from "fs-extra";
-import * as Path from "path";
-import {ConverterComponent} from "typedoc/dist/lib/converter/components";
-import {Context} from "typedoc/dist/lib/converter/context";
-import {Converter} from "typedoc/dist/lib/converter/converter";
-import {SourceReference} from "typedoc/dist/lib/models/sources/file";
-import {Component} from "typedoc/dist/lib/utils/component";
-import {Options} from "typedoc/dist/lib/utils/options/options";
+import * as fs from "fs";
+import * as path from "path";
+import { ConverterComponent } from "typedoc/dist/lib/converter/components";
+import { Context } from "typedoc/dist/lib/converter/context";
+import { Converter } from "typedoc/dist/lib/converter/converter";
+import { SourceReference } from "typedoc/dist/lib/models/sources/file";
+import { Component } from "typedoc/dist/lib/utils/component";
+import { Options } from "typedoc/dist/lib/utils/options/options";
 
 interface ISourcefileMapping {
     pattern: RegExp;
@@ -13,7 +13,7 @@ interface ISourcefileMapping {
     version?: string;
 }
 
-@Component({name: "devops-sourcefile"})
+@Component({ name: "devops-sourcefile" })
 export class DevopsSourcefileMapPlugin extends ConverterComponent {
 
     private mappings: ISourcefileMapping[] | undefined;
@@ -23,23 +23,22 @@ export class DevopsSourcefileMapPlugin extends ConverterComponent {
     }
 
     private onBegin(): void {
-        // read options parameter
-        const options: Options = this.application.options;
-        const mapRelativePath = options.getValue("devops-sourcefile-url-map");
-        const urlPrefix = options.getValue("devops-sourcefile-url-prefix");
+        // read options parameters
+        const mapRelativePath = this.readStringOption("devops-sourcefile-url-map");
+        const urlPrefix = this.readStringOption("devops-sourcefile-url-prefix");
 
-        if ( (typeof mapRelativePath !== "string") && (typeof urlPrefix !== "string") ) {
+        if (!mapRelativePath && !urlPrefix) {
             return;
         }
 
         try {
-            if ( (typeof mapRelativePath === "string") && (typeof urlPrefix === "string") ) {
+            if (mapRelativePath && urlPrefix) {
                 throw new Error("use either --devops-sourcefile-url-prefix or --devops-sourcefile-url-map option");
             }
 
-            if ( typeof mapRelativePath === "string" ) {
+            if (mapRelativePath) {
                 this.readMappingJson(mapRelativePath);
-            } else if ( typeof urlPrefix === "string" ) {
+            } else if (urlPrefix) {
                 this.mappings = [{
                     pattern: new RegExp("^"),
                     replace: urlPrefix,
@@ -49,31 +48,42 @@ export class DevopsSourcefileMapPlugin extends ConverterComponent {
 
             // register handler
             this.listenTo(this.owner, Converter.EVENT_RESOLVE_END, this.onEndResolve);
-        } catch ( e ) {
+        } catch (e) {
             console.error("typedoc-plugin-sourcefile-url: " + e.message);
         }
     }
 
+    private readStringOption(name: string): string | undefined {
+        const options: Options = this.application.options;
+        const value = options.getValue(name);
+
+        if (typeof value !== "string") {
+            return undefined;
+        }
+
+        return value;
+    }
+
     private readMappingJson(mapRelativePath: string): void {
         // load json
-        const mapAbsolutePath = Path.join(process.cwd(), mapRelativePath);
+        const mapAbsolutePath = path.join(process.cwd(), mapRelativePath);
 
         let json: any;
         try {
-            json = JSON.parse(FS.readFileSync(mapAbsolutePath, "utf8"));
-        } catch ( e ) {
+            json = JSON.parse(fs.readFileSync(mapAbsolutePath, "utf8"));
+        } catch (e) {
             throw new Error("error reading --devops-sourcefile-url-map json file: " + e.message);
         }
 
         // validate json
-        if ( !(json instanceof Array) ) {
+        if (!(json instanceof Array)) {
             throw new Error("--devops-sourcefile-url-map json file has to have Array as root element");
         }
 
         this.mappings = [];
 
         // validate & process json
-        for ( const mappingJson of json ) {
+        for (const mappingJson of json) {
             if (mappingJson instanceof Object
                 && mappingJson.hasOwnProperty("pattern") && typeof mappingJson.pattern === "string"
                 && mappingJson.hasOwnProperty("replace") && typeof mappingJson.replace === "string") {
@@ -83,7 +93,7 @@ export class DevopsSourcefileMapPlugin extends ConverterComponent {
 
                 try {
                     regExp = new RegExp(mappingJson.pattern);
-                } catch ( e ) {
+                } catch (e) {
                     throw new Error("error reading --devops-sourcefile-url-map: " + e.message);
                 }
 
@@ -110,16 +120,16 @@ export class DevopsSourcefileMapPlugin extends ConverterComponent {
     }
 
     private onEndResolve(context: Context): void {
-        if ( this.mappings === undefined ) {
+        if (this.mappings === undefined) {
             throw new Error("assertion fail");
         }
 
         const project = context.project;
 
         // process mappings
-        for ( const sourceFile of project.files ) {
-            for ( const mapping of this.mappings ) {
-                if ( sourceFile.fileName.match(mapping.pattern) ) {
+        for (const sourceFile of project.files) {
+            for (const mapping of this.mappings) {
+                if (sourceFile.fileName.match(mapping.pattern)) {
                     sourceFile.url = sourceFile.fileName.replace(mapping.pattern, mapping.replace);
                     if (typeof mapping.version === "string") {
                         sourceFile.url += "&version=" + encodeURIComponent(mapping.version);
@@ -130,10 +140,10 @@ export class DevopsSourcefileMapPlugin extends ConverterComponent {
         }
 
         // add line anchors
-        for ( const key in project.reflections ) {
+        for (const key in project.reflections) {
             const reflection = project.reflections[key];
 
-            if ( reflection.sources ) {
+            if (reflection.sources) {
                 reflection.sources.forEach((source: SourceReference) => {
                     if (source.file && source.file.url) {
                         source.url = source.file.url + "&line=" + source.line;
