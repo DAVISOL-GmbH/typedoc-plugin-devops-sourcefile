@@ -3,11 +3,11 @@
   "name": "typedoc-plugin-devops-sourcefile",
   "version": "1.0.18",
   "description": "typedoc plugin to set source file URL links to a Git repository hosted in Azure DevOps",
-  "homepage": "https://github.com/shuebner20/typedoc-plugin-devops-sourcefile",
-  "bugs": "https://github.com/shuebner20/typedoc-plugin-devops-sourcefile/issues",
+  "homepage": "https://github.com/DAVISOL-GmbH/typedoc-plugin-devops-sourcefile",
+  "bugs": "https://github.com/DAVISOL-GmbH/typedoc-plugin-devops-sourcefile/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shuebner20/typedoc-plugin-devops-sourcefile.git"
+    "url": "https://github.com/DAVISOL-GmbH/typedoc-plugin-devops-sourcefile.git"
   },
   "license": "MIT",
   "keywords": [
