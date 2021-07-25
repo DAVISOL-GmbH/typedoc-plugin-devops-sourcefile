@@ -1,7 +1,7 @@
 import { Application } from "typedoc";
 import { DevopsSourcefileMapPlugin } from "./DevopsSourcefileMapPlugin";
 
-const loadPlugin = function (app: Application) {
+export function load(app: Application) {
   app.options.addDeclaration({
     name: "devops-sourcefile-url-map",
     help: "[DevOps Source File Plugin] Pass an array of Azure DevOps URL templates. See https://github.com/shuebner20/typedoc-plugin-devops-sourcefile#advanced-mappings"
