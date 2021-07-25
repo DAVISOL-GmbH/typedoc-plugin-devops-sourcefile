@@ -80,7 +80,7 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'v$(packageJson.version)'
+    ArtifactName: 'typedoc-plugin-devops-sourcefile'
     publishLocation: 'Container'
   displayName: 'publish to Azure Pipelines'
 
