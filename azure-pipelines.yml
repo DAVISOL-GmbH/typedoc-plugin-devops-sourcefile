@@ -50,6 +50,12 @@ steps:
     git push origin HEAD:master
   displayName: 'push bumped version to origin repo'
 
+- task: oneLuckiDevJson2Variable@1
+  inputs:
+    jsonFile: '$(System.DefaultWorkingDirectory)/package.json'
+    shouldPrefixVariables: true
+    variablePrefix: 'packageJson'
+
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(System.DefaultWorkingDirectory)'
@@ -76,7 +82,8 @@ steps:
     repositoryName: '$(Build.Repository.Name)'
     action: 'create'
     target: '$(Build.SourceVersion)'
-    tagSource: 'gitTag'
+    tagSource: 'userSpecifiedTag'
+    tag: '$(packageJsonversion)'
     releaseNotesSource: 'inline'
     isDraft: true
     changeLogCompareToRelease: 'lastFullRelease'
