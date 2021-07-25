@@ -77,6 +77,13 @@ steps:
     OverWrite: true
   displayName: 'deploy output directory contents to artifact stage'
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'v$(packageJson.version)'
+    publishLocation: 'Container'
+  displayName: 'publish to Azure Pipelines'
+
 - task: GitHubRelease@1
   inputs:
     gitHubConnection: 'DAVISOL-GmbH Full Access'
