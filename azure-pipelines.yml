@@ -100,7 +100,5 @@ steps:
 - task: Npm@1
   inputs:
     command: 'publish'
-    workingDir: '$(System.DefaultWorkingDirectory)/dist'
-    publishRegistry: 'useFeed'
-    publishFeed: '2ecdc2b4-96cd-42e2-b46d-52fd45177053/56115eca-361e-4c4a-a490-94c430a57cb7'
-  enabled: false
+    workingDir: '$(Build.ArtifactStagingDirectory)'
+    publishEndpoint: 'DAVISOL npm connection'
