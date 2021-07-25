@@ -93,7 +93,6 @@ steps:
     tagSource: 'userSpecifiedTag'
     tag: '$(packageJson.version)'
     releaseNotesSource: 'inline'
-    isDraft: true
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
   displayName: 'create release at GitHub'
