@@ -39,7 +39,7 @@ steps:
 - script: |
     git config --global user.email '$(gitUserEmail)'
     git config --global user.name '$(gitUserName)'
-    npm version patch -m 'Bump version to %s [skip ci]'
+    npm version patch -m 'Bump version to %s [skip ci]' --force
   displayName: 'npm bump version'
 
 - script: |
