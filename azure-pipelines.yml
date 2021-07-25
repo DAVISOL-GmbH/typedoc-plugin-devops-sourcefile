@@ -102,3 +102,4 @@ steps:
     command: 'custom'
     workingDir: '$(Build.ArtifactStagingDirectory)'
     customCommand: 'publish --access public'
+  displayName: 'publish package to npm'
