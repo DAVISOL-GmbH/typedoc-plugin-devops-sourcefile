@@ -99,7 +99,7 @@ steps:
 
 - task: Npm@1
   inputs:
-    command: 'custom'
+    command: 'publish'
     workingDir: '$(Build.ArtifactStagingDirectory)'
-    customCommand: 'publish --access public'
+    publishEndpoint: 'shuebner20 npm connection'
   displayName: 'publish package to npm'
