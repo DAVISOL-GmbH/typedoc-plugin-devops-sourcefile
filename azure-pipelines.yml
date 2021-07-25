@@ -55,6 +55,7 @@ steps:
     jsonFile: '$(System.DefaultWorkingDirectory)/package.json'
     shouldPrefixVariables: true
     variablePrefix: 'packageJson'
+  displayName: 'read information from package.json'
 
 - task: CopyFiles@2
   inputs:
@@ -83,7 +84,7 @@ steps:
     action: 'create'
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
-    tag: '$(packageJsonversion)'
+    tag: '$(packageJson.version)'
     releaseNotesSource: 'inline'
     isDraft: true
     changeLogCompareToRelease: 'lastFullRelease'
