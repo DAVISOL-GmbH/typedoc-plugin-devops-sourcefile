@@ -47,7 +47,7 @@ steps:
   displayName: 'npm build'
 
 - script: |
-    git push
+    git push origin HEAD:master
   displayName: 'push bumped version to origin repo'
 
 - task: CopyFiles@2
