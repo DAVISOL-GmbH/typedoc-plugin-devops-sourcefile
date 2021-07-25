@@ -79,7 +79,7 @@ steps:
 
 - task: GitHubRelease@1
   inputs:
-    gitHubConnection: 'github.com_shuebner20'
+    gitHubConnection: 'DAVISOL-GmbH Full Access'
     repositoryName: '$(Build.Repository.Name)'
     action: 'create'
     target: '$(Build.SourceVersion)'
