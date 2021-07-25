@@ -43,7 +43,7 @@ steps:
   displayName: 'npm bump version'
 
 - script: |
-    npm install
+    npm build
   displayName: 'npm build'
 
 - script: |
