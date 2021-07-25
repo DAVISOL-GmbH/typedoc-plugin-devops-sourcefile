@@ -9,13 +9,6 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
-  libraryCounter: 'TypedocPluginDevopsSourceFileTS_$(Davisol.TypedocPluginDevopsSourceFileTsMajorMinorVersion)'
-  libraryBuildRevision: $[counter(variables['libraryCounter'], 200)]
-  libraryBuildVersion: '$(Davisol.TypedocPluginDevopsSourceFileTsMajorMinorVersion).$(libraryBuildRevision)'
-
-name: 'TypedocPluginDevopsSourceFile_TS_v$(Davisol.TypedocPluginDevopsSourceFileTsMajorMinorVersion).$(libraryBuildRevision)$(Rev:.r)'
-
 steps:
 - task: NodeTool@0
   inputs:
