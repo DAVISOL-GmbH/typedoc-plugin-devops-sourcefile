@@ -1,9 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
+import { ReflectionKind } from "typedoc";
 import { ConverterComponent } from "typedoc/dist/lib/converter/components";
 import { Context } from "typedoc/dist/lib/converter/context";
 import { Converter } from "typedoc/dist/lib/converter/converter";
-import { SourceReference } from "typedoc/dist/lib/models/sources/file";
+import { SourceReference } from "typedoc/dist/lib/models";
 import { Component } from "typedoc/dist/lib/utils/component";
 import { Options } from "typedoc/dist/lib/utils/options/options";
 
@@ -140,8 +141,9 @@ export class DevopsSourcefileMapPlugin extends ConverterComponent {
         }
 
         // add line anchors
-        for (const key in project.reflections) {
-            const reflection = project.reflections[key];
+        const reflections = project.getReflectionsByKind(ReflectionKind.All);
+        for (const key in reflections) {
+            const reflection = reflections[key];
 
             if (reflection.sources) {
                 reflection.sources.forEach((source: SourceReference) => {
