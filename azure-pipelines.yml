@@ -99,6 +99,6 @@ steps:
 
 - task: Npm@1
   inputs:
-    command: 'publish'
+    command: 'custom'
     workingDir: '$(Build.ArtifactStagingDirectory)'
-    publishEndpoint: 'DAVISOL npm connection'
+    customCommand: 'publish --access public'
