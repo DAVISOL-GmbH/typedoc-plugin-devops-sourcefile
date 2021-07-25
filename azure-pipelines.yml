@@ -13,7 +13,19 @@ steps:
 - checkout: self
   clean: true
   persistCredentials: true
-  displayName: 'Check out branch'
+  displayName: 'check out branch'
+
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: 'github-user-options.json'
+  name: GitHubUserOptions
+  displayName: 'retrieve GitHub user options'
+
+- task: oneLuckiDevJson2Variable@1
+  inputs:
+    jsonFile: '$(GitHubUserOptions.secureFilePath)'
+    shouldPrefixVariables: false
+  displayName: 'parse GitHub user options'
 
 - task: NodeTool@0
   inputs:
@@ -25,6 +37,8 @@ steps:
   displayName: 'npm install'
 
 - script: |
+    git config --global user.email '$(gitUserEmail)'
+    git config --global user.name '$(gitUserName)'
     npm version patch -m 'Bump version to %s [skip ci]'
   displayName: 'npm bump version'
 
