@@ -1,7 +1,7 @@
 {
   "author": "DAVISOL GmbH",
   "name": "typedoc-plugin-devops-sourcefile",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "typedoc plugin to set source file URL links to a Git repository hosted in Azure DevOps",
   "homepage": "https://github.com/DAVISOL-GmbH/typedoc-plugin-devops-sourcefile",
   "bugs": {
