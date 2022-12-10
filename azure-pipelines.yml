@@ -23,7 +23,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'cat "$(GitHubUserOptions.secureFilePath)"''
+    script: 'cat "$(GitHubUserOptions.secureFilePath)"'
 
 - task: oneLuckiDevJson2Variable@1
   inputs:
