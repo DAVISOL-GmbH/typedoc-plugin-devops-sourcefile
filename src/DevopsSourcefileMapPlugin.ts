@@ -128,15 +128,18 @@ export class DevopsSourcefileMapPlugin extends ConverterComponent {
         const project = context.project;
 
         // process mappings
-        for (const sourceFile of project.files) {
-            for (const mapping of this.mappings) {
-                if (sourceFile.fileName.match(mapping.pattern)) {
-                    sourceFile.url = sourceFile.fileName.replace(mapping.pattern, mapping.replace);
-                    if (typeof mapping.version === "string") {
-                        sourceFile.url += "&version=" + encodeURIComponent(mapping.version);
+        if (Array.isArray(project.sources)) {
+            for (let index = 0; index < project.sources.length; index++) {
+                const sourceFile = project.sources[index];
+                for (const mapping of this.mappings) {
+                    if (sourceFile.fileName.match(mapping.pattern)) {
+                        sourceFile.url = sourceFile.fileName.replace(mapping.pattern, mapping.replace);
+                        if (typeof mapping.version === "string") {
+                            sourceFile.url += "&version=" + encodeURIComponent(mapping.version);
+                        }
+                        break;
                     }
-                    break;
-                }
+                }                
             }
         }
 
@@ -147,8 +150,8 @@ export class DevopsSourcefileMapPlugin extends ConverterComponent {
 
             if (reflection.sources) {
                 reflection.sources.forEach((source: SourceReference) => {
-                    if (source.file && source.file.url) {
-                        source.url = source.file.url + "&line=" + source.line;
+                    if (typeof source === "object" && typeof source?.url === "string" && source.url.length > 0) {
+                        source.url = source.url + "&line=" + source.line;
                     }
                 });
             }

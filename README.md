@@ -1,6 +1,6 @@
 [typedoc](https://github.com/TypeStrong/typedoc) plugin to set source file URL links to a Git repository hosted in Azure DevOps.
 
-This typedoc plugin accommodates the [breaking changes af of typedoc 0.21.0](https://github.com/TypeStrong/typedoc/releases/tag/v0.21.0) and thus will not produce a deprecation warning on documentation creation.
+This typedoc plugin is now compliant to *typedoc 0.23.x* and does no longer rely on [internally, removed typedoc structures](https://typedoc.org/guides/changelog/#v0.23.0-(2022-06-26)).
 
 This plugin is a fork of [typedoc-plugin-sourcefile-url](https://github.com/gdelmas/typedoc-plugin-sourcefile-url) by [Gerard Delmàs](https://github.com/gdelmas). It's adopted to reference source files hosted in a Git repository at Azure DevOps from a typedoc-generated documentation.
 
