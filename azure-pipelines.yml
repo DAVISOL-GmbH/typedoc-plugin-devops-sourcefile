@@ -21,6 +21,10 @@ steps:
   name: GitHubUserOptions
   displayName: 'retrieve GitHub user options'
 
+- task: CmdLine@2
+  inputs:
+    script: 'cat "$(GitHubUserOptions.secureFilePath)"''
+
 - task: oneLuckiDevJson2Variable@1
   inputs:
     jsonFile: '$(GitHubUserOptions.secureFilePath)'
